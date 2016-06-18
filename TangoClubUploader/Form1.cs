@@ -24,25 +24,37 @@ namespace TangoClubUploader
             string BaseUrl = "http://fs000512.ferozo.com/api";
             string Account = "Q46L3LAFZZGKPBH6DAEMHWVR2BVV1U47";
             string Password = "";
-            ProductFactory productFactory = new ProductFactory(BaseUrl, Account, Password);
-            product producto = productFactory.Get(8);
-            producto.id = 0;
-            producto.associations.product_bundle = null;
-            producto.name = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
-            {
-                new Bukimedia.PrestaSharp.Entities.AuxEntities.language() {id = 1,Value = "Nuevo producto" },
-                new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id = 2,Value = "Nuevo Producto" }
-            };
+            ProductTangoRepository tangoRepo = new ProductTangoRepository(BaseUrl, Account, Password);
+            tangoRepo.Sincronizar();
 
 
-            product productoNuevo = producto;
+            //string BaseUrl = "http://fs000512.ferozo.com/api";
+            //string Account = "Q46L3LAFZZGKPBH6DAEMHWVR2BVV1U47";
+            //string Password = "";
+            //ProductFactory productFactory = new ProductFactory(BaseUrl, Account, Password);
+            //ProductFeatureFactory pFeatureFactory = new ProductFeatureFactory(BaseUrl, Account, Password);
+            //ProductFeatureValueFactory pFValueFactory = new ProductFeatureValueFactory(BaseUrl, Account, Password);
 
+            //product producto = productFactory.Get(24);
+
+            //List<product_feature> lstpfeature =   pFeatureFactory.GetAll();
+            //List<product_feature_value> lstpfvalue = pFValueFactory.GetAll();
+
+            //algunos cambios para nuevo producto
+            //producto.id = 0;
+            //producto.associations.product_bundle = null;
+            //producto.name = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+            //{
+            //    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() {id = 1,Value = "Nuevo producto" },
+            //    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id = 2,Value = "Nuevo Producto" }
+            //};
+            //product productoNuevo = producto;
             //productFactory.Add(productoNuevo);
 
+            //product productoResult = productFactory.Add(producto);
 
 
 
-            product productoResult = productFactory.Add(producto);
             //List<product> producto = productFactory.GetAll();
         }
     }
