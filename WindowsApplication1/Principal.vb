@@ -12,7 +12,7 @@ Public Class Principal
 
     Dim con As New SqlConnection
 
-    Dim rutaRaiz, rutaSelecc, UltimaRuta, UltimoArchivo As String
+    Dim rutaRaiz, UltimaRuta, UltimoArchivo As String
     Dim Archivon, archivoSelecc As String
 
 
@@ -74,28 +74,30 @@ Public Class Principal
 
     Private Sub TreeView2_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView2.AfterSelect
         Dim rutaArchivo As String
-        Dim BaseUrl, Account, Password As String
         Dim InfoTag As New HundredMilesSoftware.UltraID3Lib.UltraID3()
         UltimoArchivo = TreeView2.SelectedNode.Text
         rutaArchivo = TreeView1.SelectedNode.Tag & "\" & TreeView2.SelectedNode.Text
         InfoTag.Read(rutaArchivo)
         Limipar_datos_Tema()
+
         txtTema.Text = InfoTag.Title
-        txtAlbum.Text = InfoTag.Album
-        txttrack.Text = InfoTag.TrackNum
+        If txtAlbum.Text = "" Then txtAlbum.Text = InfoTag.Album
+        If IsNothing(InfoTag.TrackNum) Then
+            txttrack.Text = ""
+        Else
+            txttrack.Text = InfoTag.TrackNum
+        End If
+
         txtInterprete.Text = InfoTag.Artist
 
 
-        Dim cancion As New TangoClub()
-        cancion.Album = ""
-        cancion.Path = ""
+        'Dim cancion As New TangoClub()
+        'cancion.Album = ""
+        'cancion.Path = ""
 
 
-        BaseUrl = "http://fs000512.ferozo.com/api"
-        Account = "Q46L3LAFZZGKPBH6DAEMHWVR2BVV1U47"
-        Password = ""
-        Dim productRepo As New ProductTangoRepository(BaseUrl, Account, Password)
-        productRepo.CargarCancionProducto(cancion)
+        'Dim productRepo As New ProductTangoRepository()
+        'productRepo.CargarCancionProducto(cancion)
 
 
 
@@ -171,14 +173,28 @@ Public Class Principal
     End Sub
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
-        rutaSelecc = e.Node.Tag
-        UltimaRuta = rutaSelecc
+        UltimaRuta = e.Node.Tag
         cargarARchivos()
     End Sub
 
+
+    Private Sub Limipar_datos_Todo()
+        txtTema.Clear()
+        txttrack.Clear()
+        txtAlbum.Clear()
+        txtAutor.Clear()
+        txtCodAlbum.Clear()
+        txtCompositor.Clear()
+        txtGenero.Clear()
+        txtInterprete.Clear()
+        txtOrquesta.Clear()
+        txtSello.Clear()
+        txtVocalista.Clear()
+    End Sub
+
     Private Sub Limipar_datos_Tema()
-        txtTema.Text = ""
-        txttrack.Text = ""
+        txtTema.Clear()
+        txttrack.Clear()
     End Sub
 
 End Class

@@ -30,6 +30,18 @@ namespace TangoClubUploader
             _productDownloadFactory = new ProductDownloadFactory(BaseUrl, Account, Password);
         }
 
+        public ProductTangoRepository()
+        {
+            string BaseUrl = "http://fs000512.ferozo.com/api";
+            string Account = "Q46L3LAFZZGKPBH6DAEMHWVR2BVV1U47";
+            string Password = "";
+            TangoClubCatalogoEntities context = new TangoClubCatalogoEntities();
+            _productFactory = new ProductFactory(BaseUrl, Account, Password);
+            _pFeatureFactory = new ProductFeatureFactory(BaseUrl, Account, Password);
+            _pFValueFactory = new ProductFeatureValueFactory(BaseUrl, Account, Password);
+            _productDownloadFactory = new ProductDownloadFactory(BaseUrl, Account, Password);
+        }
+
         public product CargarCancionProducto(TangoClub cancion)
         {
             product productBase = this._productFactory.Get(25);
