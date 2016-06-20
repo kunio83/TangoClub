@@ -11,7 +11,8 @@ namespace Bukimedia.PrestaSharp.Entities
     [XmlType(Namespace = "Bukimedia/PrestaSharp/Entities")]
     public class product_download : PrestaShopEntity
     {
-        public long? id_product_download { get; set; }
+        //public long? id_product_download { get; set; }
+        public long? id { get; set; }
         public long? id_product { get; set; }
         public string display_filename { get; set; }
         public string filename { get; set; }

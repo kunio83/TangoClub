@@ -17,26 +17,26 @@ namespace Bukimedia.PrestaSharp.Factories
 
         public Entities.product_download Get(long ProductDownloadId)
         {
-            RestRequest request = this.RequestForGet("product_download", ProductDownloadId, "product_download");
+            RestRequest request = this.RequestForGet("product_downloads", ProductDownloadId, "product_download");
             return this.Execute<Entities.product_download>(request);
         }
 
         public Entities.product_download Add(Entities.product_download Product_download)
         {
-            long? idAux = Product_download.id_product_download;
+            long? idAux = Product_download.id;
 
-            Product_download.id_product_download = null;
+            Product_download.id = null;
             List<PrestaSharp.Entities.PrestaShopEntity> Entities = new List<PrestaSharp.Entities.PrestaShopEntity>();
             Entities.Add(Product_download);
-            RestRequest request = this.RequestForAdd("product_download", Entities);
+            RestRequest request = this.RequestForAdd("product_downloads", Entities);
             Entities.product_download aux = this.Execute<Entities.product_download>(request);
-            Product_download.id_product_download = idAux;
-            return this.Get((long)aux.id_product_download);
+            Product_download.id = idAux;
+            return this.Get((long)aux.id);
         }
 
         public void Update(Entities.product_download Product_download)
         {
-            RestRequest request = this.RequestForUpdate("product_downloads", Product_download.id_product_download, Product_download);
+            RestRequest request = this.RequestForUpdate("product_downloads", Product_download.id, Product_download);
             this.Execute<Entities.product_download>(request);
         }
 
@@ -48,7 +48,7 @@ namespace Bukimedia.PrestaSharp.Factories
 
         public void Delete(Entities.product_download Product_download)
         {
-            this.Delete((long)Product_download.id_product_download);
+            this.Delete((long)Product_download.id);
         }
 
         public List<long> GetIds()
@@ -103,7 +103,7 @@ namespace Bukimedia.PrestaSharp.Factories
             List<PrestaSharp.Entities.PrestaShopEntity> Entities = new List<PrestaSharp.Entities.PrestaShopEntity>();
             foreach (Entities.product_download Product_download in Product_downloads)
             {
-                Product_download.id_product_download = null;
+                Product_download.id = null;
                 Entities.Add(Product_download);
             }
             RestRequest request = this.RequestForAdd("Product_downloads", Entities);
