@@ -33,13 +33,14 @@ namespace TangoClubUploader
         public product CargarCancionProducto(TangoClub cancion)
         {
             product productBase = this._productFactory.Get(25);
-            List<product_feature_value> l = _pFValueFactory.GetAll();
             List<product_feature_value> lstFeatureValues = GetTangoProductFeatureValues(cancion);
             productBase = CargarTangoProductFeaturesAProducto(lstFeatureValues, productBase);
             productBase.active = 1;
             productBase.id = 0;
             productBase.cache_has_attachments = 1;
             productBase.associations.product_bundle = null;
+            productBase.id_default_image = 1;
+            productBase.associations.images = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.image>() { new Bukimedia.PrestaSharp.Entities.AuxEntities.image() { id = 1 } };
             productBase.name = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
             {
                 new Bukimedia.PrestaSharp.Entities.AuxEntities.language() {id = 1,Value = cancion.Tema },
@@ -243,26 +244,6 @@ namespace TangoClubUploader
             stream = sha1.ComputeHash(encoding.GetBytes(str));
             for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
             return sb.ToString();
-        }
-
-        private int getPFPos(long? idFeature)
-        {
-            switch (idFeature)
-            {
-                case 8: return 0;break;
-                case 9: return 1; break;
-                case 10: return 2; break;
-                case 11: return 3; break;
-                case 12: return 4; break;
-                case 13: return 5; break;
-                case 14: return 6; break;
-                case 15: return 7; break;
-                case 16: return 8; break;
-                case 17: return 9; break;
-                case 18: return 10; break;
-                default: return 0;break;
-
-            }
         }
 
         public void Sincronizar()
