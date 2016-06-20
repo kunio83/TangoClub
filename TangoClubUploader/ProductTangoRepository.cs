@@ -13,13 +13,13 @@ using System.IO;
 
 namespace TangoClubUploader
 {
-    class ProductTangoRepository
+    public class ProductTangoRepository
     {
         public TangoClubCatalogoEntities _context = new TangoClubCatalogoEntities();
-        ProductFactory _productFactory;
-        ProductFeatureFactory _pFeatureFactory;
-        ProductFeatureValueFactory _pFValueFactory;
-        ProductDownloadFactory _productDownloadFactory;
+        public ProductFactory _productFactory;
+        public ProductFeatureFactory _pFeatureFactory;
+        public ProductFeatureValueFactory _pFValueFactory;
+        public ProductDownloadFactory _productDownloadFactory;
 
         public ProductTangoRepository(String BaseUrl, String Account, String Password)
         {
@@ -38,6 +38,7 @@ namespace TangoClubUploader
             productBase = CargarTangoProductFeaturesAProducto(lstFeatureValues, productBase);
             productBase.active = 1;
             productBase.id = 0;
+            productBase.cache_has_attachments = 1;
             productBase.associations.product_bundle = null;
             productBase.name = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
             {
@@ -228,7 +229,7 @@ namespace TangoClubUploader
             }
         }
 
-        public static string GetNewFileName()
+        public string GetNewFileName()
         {
             DateTime now = DateTime.Now;
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);

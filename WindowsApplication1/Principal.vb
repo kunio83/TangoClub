@@ -5,6 +5,8 @@ Imports HundredMilesSoftware
 Imports System.Data.SqlClient
 Imports System.Configuration
 Imports System.Data
+Imports TangoClubUploader
+Imports TangoClubUploader.Modelo
 
 Public Class Principal
 
@@ -72,6 +74,7 @@ Public Class Principal
 
     Private Sub TreeView2_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView2.AfterSelect
         Dim rutaArchivo As String
+        Dim BaseUrl, Account, Password As String
         Dim InfoTag As New HundredMilesSoftware.UltraID3Lib.UltraID3()
         UltimoArchivo = TreeView2.SelectedNode.Text
         rutaArchivo = TreeView1.SelectedNode.Tag & "\" & TreeView2.SelectedNode.Text
@@ -81,6 +84,19 @@ Public Class Principal
         txtAlbum.Text = InfoTag.Album
         txttrack.Text = InfoTag.TrackNum
         txtInterprete.Text = InfoTag.Artist
+
+
+        Dim cancion As New TangoClub()
+        cancion.Album = ""
+        cancion.Path = ""
+
+
+        BaseUrl = "http://fs000512.ferozo.com/api"
+        Account = "Q46L3LAFZZGKPBH6DAEMHWVR2BVV1U47"
+        Password = ""
+        Dim productRepo As New ProductTangoRepository(BaseUrl, Account, Password)
+        productRepo.CargarCancionProducto(cancion)
+
 
 
 
@@ -105,7 +121,10 @@ Public Class Principal
 
 
     End Sub
+    Public Sub SubirAftp(ByVal RutaArchivo, ByVal NombreArchivo)
+        My.Computer.Network.UploadFile(RutaArchivo, "ftp://fs000512.ferozo.com/" & NombreArchivo, "uploadmp3@fs000512.ferozo.com", "Batc2016", True, 500)
 
+    End Sub
     Private Sub rdbOtro_CheckedChanged(sender As Object, e As EventArgs) Handles rdbOtro.CheckedChanged
         If rdbOtro.Checked = True Then
             txtGenero.Enabled = True
@@ -147,7 +166,7 @@ Public Class Principal
         cmd.ExecuteNonQuery()
         con.Close()
 
-        My.Computer.Network.UploadFile(rutaArchivo, "ftp://fs000512.ferozo.com/" & UltimoArchivo, "uploadmp3@fs000512.ferozo.com", "Batc2016", True, 500)
+        'My.Computer.Network.UploadFile(rutaArchivo, "ftp://fs000512.ferozo.com/" & UltimoArchivo, "uploadmp3@fs000512.ferozo.com", "Batc2016", True, 500)
         cargarARchivos()
     End Sub
 

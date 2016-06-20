@@ -124,6 +124,10 @@
       <Project>{3d494a24-06ba-475b-a158-162745683ec3}</Project>
       <Name>PrestaSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TangoCommon\TangoCommon.vbproj">
+      <Project>{6ca17892-745f-401a-a5a9-ec62ab73a585}</Project>
+      <Name>TangoCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
