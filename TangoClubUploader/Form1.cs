@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TangoClubUploader.Modelo;
 
 namespace TangoClubUploader
 {
@@ -25,9 +26,14 @@ namespace TangoClubUploader
             string Account = "Q46L3LAFZZGKPBH6DAEMHWVR2BVV1U47";
             string Password = "";
             ProductTangoRepository tangoRepo = new ProductTangoRepository(BaseUrl, Account, Password);
-            tangoRepo.Sincronizar();
 
+            TangoClub cancion = tangoRepo._context.TangoClub.FirstOrDefault(z => z.CodigTrack == "eu18009-7");
 
+            //tangoRepo.Sincronizar();
+            product nuevoProduct = tangoRepo.CargarCancionProducto(cancion);
+
+            nuevoProduct.cache_has_attachments = 1;
+            
             //string BaseUrl = "http://fs000512.ferozo.com/api";
             //string Account = "Q46L3LAFZZGKPBH6DAEMHWVR2BVV1U47";
             //string Password = "";
