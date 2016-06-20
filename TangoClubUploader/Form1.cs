@@ -30,31 +30,31 @@ namespace TangoClubUploader
             ProductTangoRepository tangoRepo = new ProductTangoRepository(BaseUrl, Account, Password);
 
             //Obtengo cualquier cancion
-            TangoClub cancion = tangoRepo._context.TangoClub.FirstOrDefault(z => z.CodigTrack == "eu18009-7");
+            TangoClub cancion = tangoRepo._context.TangoClub.FirstOrDefault(z => z.CodigTrack == "123");
 
-            //Nuevo nombre para mp3 y subo a ftp
-            String newFileName = tangoRepo.GetNewFileName();
-            VBRepository.SubirAftp(@"C:\Users\ThinkPadW7\Music\index.mp3", newFileName);
-            //VBRepository.SubirAftp(cancion.Path, newFileName);
+            ////Nuevo nombre para mp3 y subo a ftp
+            //String newFileName = tangoRepo.GetNewFileName();
+            //VBRepository.SubirAftp(@"C:\Users\ThinkPadW7\Music\index.mp3", newFileName);
+            ////VBRepository.SubirAftp(cancion.Path, newFileName);
 
             //Cargo el producto virtual
-            product nuevoProduct = tangoRepo.CargarCancionProducto(cancion);
+            tangoRepo.CargarCancionProducto(cancion);
 
-            //Genero el registro en tabla de download
-            product_download pDownload = new product_download()
-            {
-                active = 1,
-                date_add = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
-                date_expiration = "2999-01-01",
-                //display_filename = Path.GetFileName(cancion.Path),
-                display_filename = @"index.mp3",
-                filename = newFileName,
-                id_product = nuevoProduct.id,
-                id = 0,
-                is_shareable = 0,
-                nb_days_accessible = 0
-            };
-            pDownload = tangoRepo._productDownloadFactory.Add(pDownload);
+            ////Genero el registro en tabla de download
+            //product_download pDownload = new product_download()
+            //{
+            //    active = 1,
+            //    date_add = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
+            //    date_expiration = "2999-01-01",
+            //    //display_filename = Path.GetFileName(cancion.Path),
+            //    display_filename = @"index.mp3",
+            //    filename = newFileName,
+            //    id_product = nuevoProduct.id,
+            //    id = 0,
+            //    is_shareable = 0,
+            //    nb_days_accessible = 0
+            //};
+            //pDownload = tangoRepo._productDownloadFactory.Add(pDownload);
         }
     }
 }
