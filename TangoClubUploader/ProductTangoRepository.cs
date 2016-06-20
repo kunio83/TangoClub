@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using TangoClubUploader.Modelo;
 using System.Security.Cryptography;
 using System.IO;
+using TangoCommon;
 
 namespace TangoClubUploader
 {
@@ -30,36 +31,62 @@ namespace TangoClubUploader
             _productDownloadFactory = new ProductDownloadFactory(BaseUrl, Account, Password);
         }
 
-        public ProductTangoRepository()
+        public bool CargarCancionProducto(TangoClub cancion)
         {
-            string BaseUrl = "http://fs000512.ferozo.com/api";
-            string Account = "Q46L3LAFZZGKPBH6DAEMHWVR2BVV1U47";
-            string Password = "";
-            TangoClubCatalogoEntities context = new TangoClubCatalogoEntities();
-            _productFactory = new ProductFactory(BaseUrl, Account, Password);
-            _pFeatureFactory = new ProductFeatureFactory(BaseUrl, Account, Password);
-            _pFValueFactory = new ProductFeatureValueFactory(BaseUrl, Account, Password);
-            _productDownloadFactory = new ProductDownloadFactory(BaseUrl, Account, Password);
-        }
-
-        public product CargarCancionProducto(TangoClub cancion)
-        {
-            product productBase = this._productFactory.Get(25);
-            List<product_feature_value> lstFeatureValues = GetTangoProductFeatureValues(cancion);
-            productBase = CargarTangoProductFeaturesAProducto(lstFeatureValues, productBase);
-            productBase.active = 1;
-            productBase.id = 0;
-            productBase.cache_has_attachments = 1;
-            productBase.associations.product_bundle = null;
-            productBase.id_default_image = 1;
-            productBase.associations.images = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.image>() { new Bukimedia.PrestaSharp.Entities.AuxEntities.image() { id = 1 } };
-            productBase.name = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+            bool result = false;
+            try
             {
-                new Bukimedia.PrestaSharp.Entities.AuxEntities.language() {id = 1,Value = cancion.Tema },
-                new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id = 2,Value = cancion.Tema }
+                if (File.Exists(cancion.Path))
+                {
+                    //Genero y Cargo y Obtengo el product
+                    product productBase = this._productFactory.Get(25);
+                    List<product_feature_value> lstFeatureValues = GetTangoProductFeatureValues(cancion);
+                    productBase = CargarTangoProductFeaturesAProducto(lstFeatureValues, productBase);
+                    productBase.active = 1;
+                    productBase.id = 0;
+                    productBase.cache_has_attachments = 1;
+                    productBase.associations.product_bundle = null;
+                    productBase.id_default_image = 1;
+                    productBase.associations.images = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.image>() { new Bukimedia.PrestaSharp.Entities.AuxEntities.image() { id = 1 } };
+                    productBase.name = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+                {
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() {id = 1,Value = cancion.Tema },
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id = 2,Value = cancion.Tema }
 
-            };
-            return this._productFactory.Add(productBase);
+                };
+                    productBase = this._productFactory.Add(productBase);
+
+                    //Nuevo nombre para mp3 y subo a ftp
+                    String newFileName = this.GetNewFileName();
+                    VBRepository.SubirAftp(cancion.Path, newFileName);
+
+                    //Genero el registro en tabla de download
+                    product_download pDownload = new product_download()
+                    {
+                        active = 1,
+                        date_add = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
+                        date_expiration = "2999-01-01",
+                        display_filename = Path.GetFileName(cancion.Path),
+                        //display_filename = @"index.mp3",
+                        filename = newFileName,
+                        id_product = productBase.id,
+                        id = 0,
+                        is_shareable = 0,
+                        nb_days_accessible = 0
+                    };
+                    pDownload = this._productDownloadFactory.Add(pDownload);
+
+                    result = true;
+                }
+                else
+                    result = false;
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                throw new Exception(ex.Message);
+            }
+            return result;
         }
 
         /// <summary>
@@ -242,7 +269,7 @@ namespace TangoClubUploader
             }
         }
 
-        public string GetNewFileName()
+        private string GetNewFileName()
         {
             DateTime now = DateTime.Now;
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
