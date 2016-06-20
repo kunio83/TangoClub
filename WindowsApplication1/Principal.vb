@@ -92,13 +92,7 @@ Public Class Principal
         txtInterprete.Text = InfoTag.Artist
 
 
-        'Dim cancion As New TangoClub()
-        'cancion.Album = ""
-        'cancion.Path = ""
 
-
-        'Dim productRepo As New ProductTangoRepository()
-        'productRepo.CargarCancionProducto(cancion)
 
 
 
@@ -171,6 +165,29 @@ Public Class Principal
 
         'My.Computer.Network.UploadFile(rutaArchivo, "ftp://fs000512.ferozo.com/" & UltimoArchivo, "uploadmp3@fs000512.ferozo.com", "Batc2016", True, 500)
         cargarARchivos()
+
+        Dim cancion As New TangoClub()
+        cancion.Album = txtAlbum.Text
+        cancion.Path = rutaArchivo
+        cancion.Autor = txtAutor.Text
+        cancion.CodigoAlbum = txtCodAlbum.Text
+        cancion.CodigTrack = CodigTrack
+        cancion.Compositor = txtCompositor.Text
+        cancion.Estilo = txtGenero.Text
+        cancion.Genero = Estilo
+        cancion.Fecha = Fecha
+        cancion.Interprete = txtInterprete.Text
+        cancion.Orquesta = txtOrquesta.Text
+        cancion.Sello = txtSello.Text
+        cancion.Tema = txtTema.Text
+        cancion.Track = txttrack.Text
+        cancion.Vocalista = txtVocalista.Text
+
+
+        Dim productRepo As New ProductTangoRepository()
+        productRepo.CargarCancionProducto(cancion)
+
+
     End Sub
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
