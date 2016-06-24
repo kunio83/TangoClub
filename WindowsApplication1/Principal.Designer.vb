@@ -54,6 +54,7 @@ Partial Class Principal
         Me.Label9 = New System.Windows.Forms.Label()
         Me.txtVocalista = New System.Windows.Forms.TextBox()
         Me.btnGuardar = New System.Windows.Forms.Button()
+        Me.btnListados = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -101,7 +102,7 @@ Partial Class Principal
         Me.txtAlbum.Location = New System.Drawing.Point(85, 251)
         Me.txtAlbum.Name = "txtAlbum"
         Me.txtAlbum.Size = New System.Drawing.Size(269, 20)
-        Me.txtAlbum.TabIndex = 4
+        Me.txtAlbum.TabIndex = 3
         '
         'Label3
         '
@@ -126,7 +127,7 @@ Partial Class Principal
         Me.DateTimePicker1.Location = New System.Drawing.Point(85, 280)
         Me.DateTimePicker1.Name = "DateTimePicker1"
         Me.DateTimePicker1.Size = New System.Drawing.Size(128, 20)
-        Me.DateTimePicker1.TabIndex = 8
+        Me.DateTimePicker1.TabIndex = 4
         '
         'Label4
         '
@@ -142,7 +143,7 @@ Partial Class Principal
         Me.txtInterprete.Location = New System.Drawing.Point(30, 400)
         Me.txtInterprete.Name = "txtInterprete"
         Me.txtInterprete.Size = New System.Drawing.Size(513, 20)
-        Me.txtInterprete.TabIndex = 9
+        Me.txtInterprete.TabIndex = 14
         '
         'Label1
         '
@@ -158,7 +159,7 @@ Partial Class Principal
         Me.txtCodAlbum.Location = New System.Drawing.Point(456, 251)
         Me.txtCodAlbum.Name = "txtCodAlbum"
         Me.txtCodAlbum.Size = New System.Drawing.Size(87, 20)
-        Me.txtCodAlbum.TabIndex = 11
+        Me.txtCodAlbum.TabIndex = 7
         '
         'Label2
         '
@@ -175,7 +176,7 @@ Partial Class Principal
         Me.chkfecha.Location = New System.Drawing.Point(273, 284)
         Me.chkfecha.Name = "chkfecha"
         Me.chkfecha.Size = New System.Drawing.Size(69, 17)
-        Me.chkfecha.TabIndex = 14
+        Me.chkfecha.TabIndex = 5
         Me.chkfecha.Text = "Solo Año"
         Me.chkfecha.UseVisualStyleBackColor = True
         '
@@ -193,7 +194,7 @@ Partial Class Principal
         Me.txtSello.Location = New System.Drawing.Point(423, 282)
         Me.txtSello.Name = "txtSello"
         Me.txtSello.Size = New System.Drawing.Size(120, 20)
-        Me.txtSello.TabIndex = 15
+        Me.txtSello.TabIndex = 8
         '
         'GroupBox1
         '
@@ -214,7 +215,7 @@ Partial Class Principal
         Me.txtGenero.Location = New System.Drawing.Point(286, 20)
         Me.txtGenero.Name = "txtGenero"
         Me.txtGenero.Size = New System.Drawing.Size(204, 20)
-        Me.txtGenero.TabIndex = 31
+        Me.txtGenero.TabIndex = 13
         '
         'rdbOtro
         '
@@ -222,7 +223,7 @@ Partial Class Principal
         Me.rdbOtro.Location = New System.Drawing.Point(222, 23)
         Me.rdbOtro.Name = "rdbOtro"
         Me.rdbOtro.Size = New System.Drawing.Size(45, 17)
-        Me.rdbOtro.TabIndex = 30
+        Me.rdbOtro.TabIndex = 12
         Me.rdbOtro.TabStop = True
         Me.rdbOtro.Text = "Otro"
         Me.rdbOtro.UseVisualStyleBackColor = True
@@ -233,7 +234,7 @@ Partial Class Principal
         Me.rdbVals.Location = New System.Drawing.Point(162, 23)
         Me.rdbVals.Name = "rdbVals"
         Me.rdbVals.Size = New System.Drawing.Size(45, 17)
-        Me.rdbVals.TabIndex = 29
+        Me.rdbVals.TabIndex = 11
         Me.rdbVals.TabStop = True
         Me.rdbVals.Text = "Vals"
         Me.rdbVals.UseVisualStyleBackColor = True
@@ -244,7 +245,7 @@ Partial Class Principal
         Me.rdbTango.Location = New System.Drawing.Point(87, 23)
         Me.rdbTango.Name = "rdbTango"
         Me.rdbTango.Size = New System.Drawing.Size(56, 17)
-        Me.rdbTango.TabIndex = 28
+        Me.rdbTango.TabIndex = 10
         Me.rdbTango.TabStop = True
         Me.rdbTango.Text = "Tango"
         Me.rdbTango.UseVisualStyleBackColor = True
@@ -255,7 +256,7 @@ Partial Class Principal
         Me.rdbMilonga.Location = New System.Drawing.Point(19, 23)
         Me.rdbMilonga.Name = "rdbMilonga"
         Me.rdbMilonga.Size = New System.Drawing.Size(62, 17)
-        Me.rdbMilonga.TabIndex = 27
+        Me.rdbMilonga.TabIndex = 9
         Me.rdbMilonga.TabStop = True
         Me.rdbMilonga.Text = "Milonga"
         Me.rdbMilonga.UseVisualStyleBackColor = True
@@ -274,7 +275,7 @@ Partial Class Principal
         Me.txtOrquesta.Location = New System.Drawing.Point(29, 450)
         Me.txtOrquesta.Name = "txtOrquesta"
         Me.txtOrquesta.Size = New System.Drawing.Size(513, 20)
-        Me.txtOrquesta.TabIndex = 24
+        Me.txtOrquesta.TabIndex = 15
         '
         'Label7
         '
@@ -290,7 +291,7 @@ Partial Class Principal
         Me.txtCompositor.Location = New System.Drawing.Point(29, 502)
         Me.txtCompositor.Name = "txtCompositor"
         Me.txtCompositor.Size = New System.Drawing.Size(513, 20)
-        Me.txtCompositor.TabIndex = 26
+        Me.txtCompositor.TabIndex = 16
         '
         'Label8
         '
@@ -306,7 +307,7 @@ Partial Class Principal
         Me.txtAutor.Location = New System.Drawing.Point(29, 551)
         Me.txtAutor.Name = "txtAutor"
         Me.txtAutor.Size = New System.Drawing.Size(513, 20)
-        Me.txtAutor.TabIndex = 28
+        Me.txtAutor.TabIndex = 17
         '
         'Label9
         '
@@ -322,22 +323,32 @@ Partial Class Principal
         Me.txtVocalista.Location = New System.Drawing.Point(29, 593)
         Me.txtVocalista.Name = "txtVocalista"
         Me.txtVocalista.Size = New System.Drawing.Size(513, 20)
-        Me.txtVocalista.TabIndex = 30
+        Me.txtVocalista.TabIndex = 18
         '
         'btnGuardar
         '
-        Me.btnGuardar.Location = New System.Drawing.Point(395, 634)
+        Me.btnGuardar.Location = New System.Drawing.Point(84, 632)
         Me.btnGuardar.Name = "btnGuardar"
         Me.btnGuardar.Size = New System.Drawing.Size(147, 28)
-        Me.btnGuardar.TabIndex = 32
+        Me.btnGuardar.TabIndex = 19
         Me.btnGuardar.Text = "Guardar"
         Me.btnGuardar.UseVisualStyleBackColor = True
+        '
+        'btnListados
+        '
+        Me.btnListados.Location = New System.Drawing.Point(237, 632)
+        Me.btnListados.Name = "btnListados"
+        Me.btnListados.Size = New System.Drawing.Size(143, 28)
+        Me.btnListados.TabIndex = 20
+        Me.btnListados.Text = "Ir a Listados"
+        Me.btnListados.UseVisualStyleBackColor = True
         '
         'Principal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(577, 673)
+        Me.Controls.Add(Me.btnListados)
         Me.Controls.Add(Me.btnGuardar)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.txtVocalista)
@@ -406,4 +417,5 @@ Partial Class Principal
     Friend WithEvents Label9 As Label
     Friend WithEvents txtVocalista As TextBox
     Friend WithEvents btnGuardar As Button
+    Friend WithEvents btnListados As Button
 End Class

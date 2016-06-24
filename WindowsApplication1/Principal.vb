@@ -92,13 +92,7 @@ Public Class Principal
         txtInterprete.Text = InfoTag.Artist
 
 
-        'Dim cancion As New TangoClub()
-        'cancion.Album = ""
-        'cancion.Path = ""
 
-
-        'Dim productRepo As New ProductTangoRepository()
-        'productRepo.CargarCancionProducto(cancion)
 
 
 
@@ -121,13 +115,8 @@ Public Class Principal
                 TreeView2.Nodes.Add(Archivon)
             End If
         Next
-
-
     End Sub
-    Public Sub SubirAftp(ByVal RutaArchivo, ByVal NombreArchivo)
-        My.Computer.Network.UploadFile(RutaArchivo, "ftp://fs000512.ferozo.com/" & NombreArchivo, "uploadmp3@fs000512.ferozo.com", "Batc2016", True, 500)
 
-    End Sub
     Private Sub rdbOtro_CheckedChanged(sender As Object, e As EventArgs) Handles rdbOtro.CheckedChanged
         If rdbOtro.Checked = True Then
             txtGenero.Enabled = True
@@ -138,6 +127,15 @@ Public Class Principal
     End Sub
 
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
+        Dim Val As Boolean
+        If UltimoArchivo = "" Then
+            MsgBox("DEBE SELECCIONAR UN ARCHIVO",, "ERROR")
+            Exit Sub
+        End If
+
+        If Validacion() = False Then Exit Sub
+
+
         Dim rutaArchivo, Genero, Estilo, CodigTrack, Fecha As String
         Dim InfoTag As New HundredMilesSoftware.UltraID3Lib.UltraID3()
         rutaArchivo = UltimaRuta & "\" & UltimoArchivo
@@ -155,6 +153,7 @@ Public Class Principal
         CodigTrack = txtCodAlbum.Text & "-" & txttrack.Text
         If chkfecha.Checked = True Then
             Fecha = DateTimePicker1.Text.Remove(0, DateTimePicker1.Text.LastIndexOf("/") + 1)
+        Else
             Fecha = DateTimePicker1.Text
         End If
         Estilo = "CANTADO"
@@ -171,10 +170,52 @@ Public Class Principal
 
         'My.Computer.Network.UploadFile(rutaArchivo, "ftp://fs000512.ferozo.com/" & UltimoArchivo, "uploadmp3@fs000512.ferozo.com", "Batc2016", True, 500)
         cargarARchivos()
+
+        Dim cancion As New TangoClub()
+        cancion.Album = txtAlbum.Text
+        cancion.Path = rutaArchivo
+        cancion.Autor = txtAutor.Text
+        cancion.CodigoAlbum = txtCodAlbum.Text
+        cancion.CodigTrack = CodigTrack
+        cancion.Compositor = txtCompositor.Text
+        cancion.Estilo = Genero
+        cancion.Genero = Estilo
+        cancion.Fecha = Fecha
+        cancion.Interprete = txtInterprete.Text
+        cancion.Orquesta = txtOrquesta.Text
+        cancion.Sello = txtSello.Text
+        cancion.Tema = txtTema.Text
+        cancion.Track = txttrack.Text
+        cancion.Vocalista = txtVocalista.Text
+
+
+
+        Dim productRepo As New ProductTangoRepository()
+        productRepo.CargarCancionProducto(cancion)
+
+
+    End Sub
+    Private Function Validacion() As Boolean
+        For Each Cont As Control In Me.Controls
+            If TypeOf (Cont) Is TextBox Or TypeOf (Cont) Is DateTimePicker Then
+                If Cont.Text = "" Then
+                    MsgBox("Debe completar el campo " & Cont.Name.Remove(0, 3),, "INFORMACIÓN")
+                    Cont.Focus()
+                    Return False
+                End If
+            End If
+        Next
+        Return True
+    End Function
+
+    Private Sub btnListados_Click(sender As Object, e As EventArgs) Handles btnListados.Click
+        frmListados.Show()
     End Sub
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
         UltimaRuta = e.Node.Tag
+        UltimoArchivo = ""
+        Limipar_datos_Todo()
         cargarARchivos()
     End Sub
 
