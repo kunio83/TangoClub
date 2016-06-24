@@ -21,6 +21,11 @@ namespace TangoClubUploader
         public ProductFeatureFactory _pFeatureFactory;
         public ProductFeatureValueFactory _pFValueFactory;
         public ProductDownloadFactory _productDownloadFactory;
+        public List<TangoClub> _cancionesAAgregar;
+
+        public int totalEnTienda { get; set; }
+        public int totalLocal { get; set; }
+        public int totalASubir { get; set; }
 
         public ProductTangoRepository(String BaseUrl, String Account, String Password)
         {
@@ -29,27 +34,24 @@ namespace TangoClubUploader
             _pFeatureFactory = new ProductFeatureFactory(BaseUrl, Account, Password);
             _pFValueFactory = new ProductFeatureValueFactory(BaseUrl, Account, Password);
             _productDownloadFactory = new ProductDownloadFactory(BaseUrl, Account, Password);
+
         }
 
-        public ProductTangoRepository()
+        public void RefreshInfoCarga()
         {
-            string BaseUrl = "http://fs000512.ferozo.com/api";
-            string Account = "Q46L3LAFZZGKPBH6DAEMHWVR2BVV1U47";
-            string Password = "";
-
-            TangoClubCatalogoEntities context = new TangoClubCatalogoEntities();
-            _productFactory = new ProductFactory(BaseUrl, Account, Password);
-            _pFeatureFactory = new ProductFeatureFactory(BaseUrl, Account, Password);
-            _pFValueFactory = new ProductFeatureValueFactory(BaseUrl, Account, Password);
-            _productDownloadFactory = new ProductDownloadFactory(BaseUrl, Account, Password);
+            //Cargar datos de subida
+            _cancionesAAgregar = getCancionesAAgregar();
+            totalEnTienda = this._productFactory.GetIds().Count - 1; //resto el Producto Base
+            totalLocal = this._context.TangoClub.Count();
+            totalASubir = this._cancionesAAgregar.Count;
         }
 
-        public bool CargarCancionProducto(TangoClub cancion)
+        public bool CargarCancionProducto(TangoClub cancion,String newFileName)
         {
             bool result = false;
             try
             {
-                if (File.Exists(cancion.Path))
+                if (File.Exists(@"C:\Users\ThinkPadW7\Music\index.mp3"/*cancion.Path*/))
                 {
                     //Genero y Cargo y Obtengo el product
                     product productBase = this._productFactory.Get(25);
@@ -62,16 +64,25 @@ namespace TangoClubUploader
                     productBase.id_default_image = 1;
                     productBase.associations.images = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.image>() { new Bukimedia.PrestaSharp.Entities.AuxEntities.image() { id = 1 } };
                     productBase.name = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
-                {
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() {id = 1,Value = cancion.Tema },
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id = 2,Value = cancion.Tema }
+                    {
+                        new Bukimedia.PrestaSharp.Entities.AuxEntities.language() {id = 1,Value = cancion.Tema },
+                        new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id = 2,Value = cancion.Tema }
 
-                };
+                    };
+                    //Pongo descripcion corta y larga iguales
+                    productBase.description = productBase.description_short = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+                    {
+                        new Bukimedia.PrestaSharp.Entities.AuxEntities.language
+                        {
+                            id = 1, Value = this.GetDescription(cancion)
+                        },
+                        new Bukimedia.PrestaSharp.Entities.AuxEntities.language
+                        {
+                            id = 2, Value = this.GetDescription(cancion)
+                        }
+                    };
                     productBase = this._productFactory.Add(productBase);
 
-                    //Nuevo nombre para mp3 y subo a ftp
-                    String newFileName = this.GetNewFileName();
-                    VBRepository.SubirAftp(cancion.Path, newFileName);
 
                     //Genero el registro en tabla de download
                     product_download pDownload = new product_download()
@@ -79,13 +90,13 @@ namespace TangoClubUploader
                         active = 1,
                         date_add = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
                         date_expiration = "2999-01-01",
-                        display_filename = Path.GetFileName(cancion.Path),
-                        //display_filename = @"index.mp3",
+                        //display_filename = Path.GetFileName(cancion.Path),
+                        display_filename = @"index.mp3",
                         filename = newFileName,
                         id_product = productBase.id,
                         id = 0,
                         is_shareable = 0,
-                        nb_days_accessible = 0
+                        nb_days_accessible = 7
                     };
                     pDownload = this._productDownloadFactory.Add(pDownload);
 
@@ -265,24 +276,7 @@ namespace TangoClubUploader
             return producto;
         }
 
-        private void CargarArchivoAFtp(string pathLocalFile)
-        {
-            if (File.Exists(pathLocalFile))
-            {
-                /* Create Object Instance */
-                ftp ftpClient = new ftp(@"fs000512.ferozo.com", "fs000512", "foZIbi37zo");
-
-                string newFileName = GetNewFileName();
-
-                /* Upload a File */
-                ftpClient.upload("/public_html/download/" + newFileName, pathLocalFile);
-
-                /* Release Resources */
-                ftpClient = null;
-            }
-        }
-
-        private string GetNewFileName()
+        public string GetNewFileName()
         {
             DateTime now = DateTime.Now;
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
@@ -298,34 +292,37 @@ namespace TangoClubUploader
             return sb.ToString();
         }
 
-        public void Sincronizar()
+        private string GetDescription(TangoClub cancion)
+        {
+            return String.Format("Interprete {0} - Album: {1} - Track: {2} - Tema: {3}", cancion.Interprete, cancion.Album, cancion.Track, cancion.Tema);
+        }
+
+        private List<TangoClub> getCancionesAAgregar()
         {
             List<TangoClub> lstCanciones = this._context.TangoClub.ToList();
             List<product> lstProductos = this._productFactory.GetAll();
-            List<product_feature> lstFeature = this._pFeatureFactory.GetAll();
-            List<product_feature_value> lstFeatureValue = this._pFValueFactory.GetAll();
 
-            Boolean existeEnTienda = true;
             String shortDesc = String.Empty;
             List<TangoClub> lstProductosAAgregar = new List<TangoClub>();
             foreach (TangoClub c in lstCanciones)
             {
-                shortDesc = String.Format("Interprete {0} - Album: {1} - Track: {2} - Tema: {3}", c.Interprete, c.Album, c.Track, c.Tema);
+                shortDesc = this.GetDescription(c);
 
                 if (lstProductos.Where(z => z.name[0].Value == c.Tema &&
-                    z.description_short[0].Value == shortDesc).Count() > 0)
-                {
-                    continue;
-                }
-                else
+                    z.description_short[0].Value == shortDesc).Count() == 0)
                 {
                     lstProductosAAgregar.Add(c);
                 }
-
             }
+            return lstProductosAAgregar;
+        }
 
+        private bool CargarArchivoAFtp(string newName, string path)
+        {
+            ftp ftpRepo = new ftp("ftp://fs000512.ferozo.com/", "uploadmp3@prestashoptesting.com", "Batc2016");
+            ftpRepo.upload(newName, path);
 
-
+            return false;
         }
     }
 }

@@ -57,11 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ftp.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FtpProgress.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Modelo\ModeloTango.Context.cs">
       <AutoGen>True</AutoGen>
@@ -81,11 +78,20 @@
     <Compile Include="Modelo\TangoClub.cs">
       <DependentUpon>ModeloTango.tt</DependentUpon>
     </Compile>
+    <Compile Include="Principal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Principal.Designer.cs">
+      <DependentUpon>Principal.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProductTangoRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FtpProgress.resx">
+      <DependentUpon>FtpProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Principal.resx">
+      <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
