@@ -130,5 +130,17 @@ namespace TangoClubUploader.Properties {
                 this["Precio"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        public string IdProductoBase {
+            get {
+                return ((string)(this["IdProductoBase"]));
+            }
+            set {
+                this["IdProductoBase"] = value;
+            }
+        }
     }
 }

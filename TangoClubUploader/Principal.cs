@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetroFramework.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,10 +14,9 @@ using TangoCommon;
 
 namespace TangoClubUploader
 {
-    public partial class Principal : Form
+    public partial class Principal : MetroForm
     {
         ProductTangoRepository _tangoRepo;
-
 
         public Principal()
         {
@@ -70,7 +70,8 @@ namespace TangoClubUploader
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(ex.Message);
+                    MessageBox.Show(ex.Message);
+                    break;
                 }
             }
             lblEstado.Visible = false;

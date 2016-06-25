@@ -15,7 +15,7 @@ namespace Bukimedia.PrestaSharp.Factories
 {
     public abstract class RestSharpFactory
     {
-        protected string BaseUrl{get;set;}
+        protected string BaseUrl{get;set;}      
         protected string Account{get;set;}
         protected string Password{get;set;}
 

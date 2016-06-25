@@ -54,6 +54,7 @@ namespace TangoClubUploader
                 if (File.Exists(cancion.Path))
                 {
                     //Genero y Cargo y Obtengo el product
+                    int idProductoBase = Convert.ToInt32(Properties.Settings.Default.IdProductoBase);
                     product productBase = this._productFactory.Get(25);
                     List<product_feature_value> lstFeatureValues = GetTangoProductFeatureValues(cancion);
                     productBase = CargarTangoProductFeaturesAProducto(lstFeatureValues, productBase);
@@ -62,7 +63,7 @@ namespace TangoClubUploader
                     productBase.price = Convert.ToDecimal(Properties.Settings.Default.Precio);
                     productBase.cache_has_attachments = 1;
                     productBase.associations.product_bundle = null;
-                    productBase.id_default_image = 1;
+                    //productBase.id_default_image = 1;
                     productBase.associations.images = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.image>() { new Bukimedia.PrestaSharp.Entities.AuxEntities.image() { id = 1 } };
                     productBase.name = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
                     {
