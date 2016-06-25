@@ -51,7 +51,7 @@ namespace TangoClubUploader
             bool result = false;
             try
             {
-                if (File.Exists(@"C:\Users\ThinkPadW7\Music\index.mp3"/*cancion.Path*/))
+                if (File.Exists(cancion.Path))
                 {
                     //Genero y Cargo y Obtengo el product
                     product productBase = this._productFactory.Get(25);
@@ -59,6 +59,7 @@ namespace TangoClubUploader
                     productBase = CargarTangoProductFeaturesAProducto(lstFeatureValues, productBase);
                     productBase.active = 1;
                     productBase.id = 0;
+                    productBase.price = Convert.ToDecimal(Properties.Settings.Default.Precio);
                     productBase.cache_has_attachments = 1;
                     productBase.associations.product_bundle = null;
                     productBase.id_default_image = 1;
@@ -81,8 +82,8 @@ namespace TangoClubUploader
                             id = 2, Value = this.GetDescription(cancion)
                         }
                     };
+                    
                     productBase = this._productFactory.Add(productBase);
-
 
                     //Genero el registro en tabla de download
                     product_download pDownload = new product_download()
@@ -90,13 +91,15 @@ namespace TangoClubUploader
                         active = 1,
                         date_add = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
                         date_expiration = "2999-01-01",
-                        //display_filename = Path.GetFileName(cancion.Path),
-                        display_filename = @"index.mp3",
+                        display_filename = Path.GetFileName(cancion.Path),
                         filename = newFileName,
                         id_product = productBase.id,
                         id = 0,
                         is_shareable = 0,
-                        nb_days_accessible = 7
+                        nb_days_accessible = Convert.ToInt32(Properties.Settings.Default.DiasDisponible),
+                        nb_downloadable = Convert.ToInt32(Properties.Settings.Default.CantidadDescargas)
+
+
                     };
                     pDownload = this._productDownloadFactory.Add(pDownload);
 

@@ -37,7 +37,7 @@
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(243, 177);
+            this.btnRun.Location = new System.Drawing.Point(164, 131);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(154, 91);
             this.btnRun.TabIndex = 0;
@@ -57,7 +57,7 @@
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(240, 282);
+            this.lblEstado.Location = new System.Drawing.Point(137, 253);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(50, 13);
             this.lblEstado.TabIndex = 2;

@@ -94,5 +94,41 @@ namespace TangoClubUploader.Properties {
                 this["ApiPass"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public string DiasDisponible {
+            get {
+                return ((string)(this["DiasDisponible"]));
+            }
+            set {
+                this["DiasDisponible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public string CantidadDescargas {
+            get {
+                return ((string)(this["CantidadDescargas"]));
+            }
+            set {
+                this["CantidadDescargas"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string Precio {
+            get {
+                return ((string)(this["Precio"]));
+            }
+            set {
+                this["Precio"] = value;
+            }
+        }
     }
 }

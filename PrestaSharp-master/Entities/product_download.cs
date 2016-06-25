@@ -21,5 +21,6 @@ namespace Bukimedia.PrestaSharp.Entities
         public long? nb_days_accessible { get; set; }
         public int active { get; set; }
         public int is_shareable { get; set; }
+        public int nb_downloadable { get; set; }
     }
 }
