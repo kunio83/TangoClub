@@ -54,15 +54,21 @@ namespace TangoClubUploader
                     lblEstado.Text = "Procesando: " + Path.GetFileName(cancion.Path) + "(" + cancion.Tema + ")";
                     newFileName = this._tangoRepo.GetNewFileName();
 
-                    //Creamos el Producto
-                    this._tangoRepo.CargarCancionProducto(cancion, newFileName);
+                    //Creamos el Producto y lo traigo por si hay que borrarlo
+                    int idNuevoProducto = this._tangoRepo.CargarCancionProducto(cancion, newFileName);
 
                     //Subimos a FTP
                     String ftpHost = Properties.Settings.Default.FtpHost;
                     String ftpUser = Properties.Settings.Default.FtpUser;
                     String ftpPass = Properties.Settings.Default.FtpPass;
 
-                    VBRepository.SubirAftp(cancion.Path, newFileName, ftpHost, ftpUser, ftpPass);
+                    if (!VBRepository.SubirAftp(cancion.Path, newFileName, ftpHost, ftpUser, ftpPass))
+                    {
+                        this._tangoRepo._productFactory.Delete(idNuevoProducto);
+                        lblEstado.Visible = false;
+                        progressBar1.Maximum = this._tangoRepo.totalASubir;
+                        break;
+                    }
 
                     Numactual++;
                     lblCantidad.Text = String.Format("{0} / {1}", Numactual, this._tangoRepo.totalASubir);
@@ -70,7 +76,9 @@ namespace TangoClubUploader
                 }
                 catch (Exception ex)
                 {
+                    lblEstado.Visible = false;
                     MessageBox.Show(ex.Message);
+                    progressBar1.Maximum = this._tangoRepo.totalASubir;
                     break;
                 }
             }

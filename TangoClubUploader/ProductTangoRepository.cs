@@ -46,9 +46,9 @@ namespace TangoClubUploader
             totalASubir = this._cancionesAAgregar.Count;
         }
 
-        public bool CargarCancionProducto(TangoClub cancion,String newFileName)
+        public int CargarCancionProducto(TangoClub cancion,String newFileName)
         {
-            bool result = false;
+            int result = 0;
             try
             {
                 if (File.Exists(cancion.Path))
@@ -83,7 +83,7 @@ namespace TangoClubUploader
                             id = 2, Value = this.GetDescription(cancion)
                         }
                     };
-                    
+
                     productBase = this._productFactory.Add(productBase);
 
                     //Genero el registro en tabla de download
@@ -104,14 +104,14 @@ namespace TangoClubUploader
                     };
                     pDownload = this._productDownloadFactory.Add(pDownload);
 
-                    result = true;
+                    result = (Int32)productBase.id;
                 }
                 else
-                    result = false;
+                    result = 0;
             }
             catch (Exception ex)
             {
-                result = false;
+                result = 0;
                 throw new Exception(ex.Message);
             }
             return result;

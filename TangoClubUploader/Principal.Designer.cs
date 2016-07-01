@@ -42,7 +42,7 @@
             this.btnRun.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnRun.Location = new System.Drawing.Point(183, 37);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(172, 64);
+            this.btnRun.Size = new System.Drawing.Size(171, 64);
             this.btnRun.TabIndex = 0;
             this.btnRun.Text = "Sincronizar";
             this.btnRun.UseVisualStyleBackColor = true;
@@ -53,25 +53,25 @@
             this.lblTips.AutoSize = true;
             this.lblTips.Location = new System.Drawing.Point(3, 34);
             this.lblTips.Name = "lblTips";
-            this.lblTips.Size = new System.Drawing.Size(37, 13);
+            this.lblTips.Size = new System.Drawing.Size(172, 26);
             this.lblTips.TabIndex = 1;
-            this.lblTips.Text = "lblTips";
+            this.lblTips.Text = "dfgfdgfdsgdfsgsdfgdsfgsdfgdfsgfdgsdfgdfsgfsdgdfsg";
             // 
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
             this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblEstado.Location = new System.Drawing.Point(183, 21);
+            this.lblEstado.Location = new System.Drawing.Point(183, 8);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Size = new System.Drawing.Size(172, 13);
+            this.lblEstado.Size = new System.Drawing.Size(171, 26);
             this.lblEstado.TabIndex = 2;
-            this.lblEstado.Text = "lblEstado";
+            this.lblEstado.Text = "tyuiytuiyutiyutiyuihighfghfghgfgdfghdfghghfgdfghfghfhuigguiguggui";
             this.lblEstado.Visible = false;
             // 
             // lblCantidad
             // 
             this.lblCantidad.AutoSize = true;
-            this.lblCantidad.Location = new System.Drawing.Point(361, 104);
+            this.lblCantidad.Location = new System.Drawing.Point(360, 104);
             this.lblCantidad.Name = "lblCantidad";
             this.lblCantidad.Size = new System.Drawing.Size(35, 13);
             this.lblCantidad.TabIndex = 4;
@@ -82,7 +82,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.28902F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.71098F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 73F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 74F));
             this.tableLayoutPanel1.Controls.Add(this.btnRun, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.lblTips, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.progressBar1, 1, 2);
@@ -104,7 +104,7 @@
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.progressBar1.Location = new System.Drawing.Point(183, 107);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(172, 18);
+            this.progressBar1.Size = new System.Drawing.Size(171, 18);
             this.progressBar1.TabIndex = 5;
             // 
             // Principal
