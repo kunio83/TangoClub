@@ -61,11 +61,10 @@
             // 
             this.lblEstado.AutoSize = true;
             this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblEstado.Location = new System.Drawing.Point(183, 8);
+            this.lblEstado.Location = new System.Drawing.Point(183, 21);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Size = new System.Drawing.Size(171, 26);
+            this.lblEstado.Size = new System.Drawing.Size(171, 13);
             this.lblEstado.TabIndex = 2;
-            this.lblEstado.Text = "tyuiytuiyutiyutiyuihighfghfghgfgdfghdfghghfgdfghfghfhuigguiguggui";
             this.lblEstado.Visible = false;
             // 
             // lblCantidad

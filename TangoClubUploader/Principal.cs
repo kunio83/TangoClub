@@ -28,11 +28,11 @@ namespace TangoClubUploader
             this.RefrescarInfoLabel();
             String msj = String.Format("Total canciones en la Tienda: {0}\r\nTotal canciones en Base Local: {1}\r\nCanciones a Cargar: {2}\r\n¿Desea Continuar?",
                                         this._tangoRepo.totalEnTienda.ToString(), this._tangoRepo.totalLocal.ToString(), this._tangoRepo.totalASubir.ToString());
-
             if (this._tangoRepo.totalASubir > 0)
             {
                 if (((DialogResult)MessageBox.Show(msj, "Confirmar", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2)) == DialogResult.OK)
                 {
+                    
                     this.Sincronizar();
                 }
                 this.RefrescarInfoLabel();
@@ -46,7 +46,7 @@ namespace TangoClubUploader
             progressBar1.Maximum = this._tangoRepo.totalASubir;
             lblTips.Text = "Publicando Articulos...";
             lblEstado.Visible = true;
-
+            Application.DoEvents();
             foreach (TangoClub cancion in this._tangoRepo._cancionesAAgregar)
             {
                 try
@@ -62,17 +62,21 @@ namespace TangoClubUploader
                     String ftpUser = Properties.Settings.Default.FtpUser;
                     String ftpPass = Properties.Settings.Default.FtpPass;
 
-                    if (!VBRepository.SubirAftp(cancion.Path, newFileName, ftpHost, ftpUser, ftpPass))
+                    if (VBRepository.SubirAftp(cancion.Path, newFileName, ftpHost, ftpUser, ftpPass))
+                    {
+                        Numactual++;
+                        lblCantidad.Text = String.Format("{0} / {1}", Numactual, this._tangoRepo.totalASubir);
+                        progressBar1.Value = Numactual;
+                    }
+                    else
                     {
                         this._tangoRepo._productFactory.Delete(idNuevoProducto);
                         lblEstado.Visible = false;
-                        progressBar1.Maximum = this._tangoRepo.totalASubir;
+                        progressBar1.Value = 0;
                         break;
                     }
 
-                    Numactual++;
-                    lblCantidad.Text = String.Format("{0} / {1}", Numactual, this._tangoRepo.totalASubir);
-                    progressBar1.Value = Numactual;
+                    
                 }
                 catch (Exception ex)
                 {
