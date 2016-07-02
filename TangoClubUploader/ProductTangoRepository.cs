@@ -41,7 +41,7 @@ namespace TangoClubUploader
         {
             //Cargar datos de subida
             _cancionesAAgregar = getCancionesAAgregar();
-            totalEnTienda = this._productFactory.GetIds().Count - 1; //resto el Producto Base
+            totalEnTienda = this.getProductosVirtuales().Count; //resto el Producto Base
             totalLocal = this._context.TangoClub.Count();
             totalASubir = this._cancionesAAgregar.Count;
         }
@@ -63,12 +63,19 @@ namespace TangoClubUploader
                     productBase.price = Convert.ToDecimal(Properties.Settings.Default.Precio);
                     productBase.cache_has_attachments = 1;
                     productBase.associations.product_bundle = null;
+                    productBase.link_rewrite = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+                    {
+                        new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id=1, Value = cancion.Tema.ToUpper().Replace(' ', '_')},
+                        new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id=1, Value = cancion.Tema.ToUpper().Replace(' ', '_')}
+                    };
+                        
+                        
                     //productBase.id_default_image = 1;
                     productBase.associations.images = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.image>() { new Bukimedia.PrestaSharp.Entities.AuxEntities.image() { id = 1 } };
                     productBase.name = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
                     {
-                        new Bukimedia.PrestaSharp.Entities.AuxEntities.language() {id = 1,Value = cancion.Tema },
-                        new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id = 2,Value = cancion.Tema }
+                        new Bukimedia.PrestaSharp.Entities.AuxEntities.language() {id = 1,Value = cancion.Tema + " - " + cancion.Interprete },
+                        new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id = 2,Value = cancion.Tema + " - " + cancion.Interprete }
 
                     };
                     //Pongo descripcion corta y larga iguales
@@ -138,50 +145,11 @@ namespace TangoClubUploader
                 };
                 result.Add(pFValueAlbum);
             }
-            //Autor
-            if (cancion.Autor != String.Empty)
-            {
-                product_feature_value pFValueAutor = new product_feature_value();
-                pFValueAutor.id_feature = 9;
-                pFValueAutor.custom = 1;
-                pFValueAutor.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
-                {
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Autor, id = 1},
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Autor, id = 2}
-                };
-                result.Add(pFValueAutor);
-            }
-            //codigoAlbum
-            if (cancion.CodigoAlbum != String.Empty)
-            {
-                product_feature_value pFValueCodAlbum = new product_feature_value();
-                pFValueCodAlbum.id_feature = 10;
-                pFValueCodAlbum.custom = 1;
-                pFValueCodAlbum.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
-                {
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.CodigoAlbum, id = 1},
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.CodigoAlbum, id = 2}
-                };
-                result.Add(pFValueCodAlbum);
-            }
-            //Compositor
-            if (cancion.Compositor != String.Empty)
-            {
-                product_feature_value pFValueCompositor = new product_feature_value();
-                pFValueCompositor.id_feature = 11;
-                pFValueCompositor.custom = 1;
-                pFValueCompositor.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
-                {
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Compositor, id = 1},
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Compositor, id = 2}
-                };
-                result.Add(pFValueCompositor);
-            }
             //Fecha
             if (cancion.Fecha != String.Empty)
             {
                 product_feature_value pFValueFecha = new product_feature_value();
-                pFValueFecha.id_feature = 12;
+                pFValueFecha.id_feature = 9;
                 pFValueFecha.custom = 1;
                 pFValueFecha.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
                 {
@@ -190,18 +158,57 @@ namespace TangoClubUploader
                 };
                 result.Add(pFValueFecha);
             }
-            //Genero
-            if (cancion.Genero != String.Empty)
+            //codigoAlbum
+            if (cancion.Estilo != String.Empty)
             {
                 product_feature_value pFValueGenero = new product_feature_value();
-                pFValueGenero.id_feature = 13;
+                pFValueGenero.id_feature = 10;
                 pFValueGenero.custom = 1;
                 pFValueGenero.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
                 {
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Genero, id = 1},
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Genero, id = 2}
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Estilo, id = 1},
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Estilo, id = 2}
                 };
                 result.Add(pFValueGenero);
+            }
+            //Compositor
+            if (cancion.Track != 0)
+            {
+                product_feature_value pFValueTrack = new product_feature_value();
+                pFValueTrack.id_feature = 11;
+                pFValueTrack.custom = 1;
+                pFValueTrack.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+                {
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Track.ToString(), id = 1},
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Track.ToString(), id = 2}
+                };
+                result.Add(pFValueTrack);
+            }
+            //Fecha
+            if (cancion.CodigoAlbum != String.Empty)
+            {
+                product_feature_value pFValueCodAlbum = new product_feature_value();
+                pFValueCodAlbum.id_feature = 12;
+                pFValueCodAlbum.custom = 1;
+                pFValueCodAlbum.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+                {
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.CodigoAlbum, id = 1},
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.CodigoAlbum, id = 2}
+                };
+                result.Add(pFValueCodAlbum);
+            }
+            //Genero
+            if (cancion.Sello != String.Empty)
+            {
+                product_feature_value pFValueSello = new product_feature_value();
+                pFValueSello.id_feature = 13;
+                pFValueSello.custom = 1;
+                pFValueSello.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+                 {
+                     new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Sello, id = 1},
+                     new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Sello, id = 2}
+                 };
+                result.Add(pFValueSello);
             }
             //Interprete
             if (cancion.Interprete != String.Empty)
@@ -210,10 +217,10 @@ namespace TangoClubUploader
                 pFValueInterprete.id_feature = 14;
                 pFValueInterprete.custom = 1;
                 pFValueInterprete.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
-                {
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Interprete, id = 1},
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Interprete, id = 2}
-                };
+                 {
+                     new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Interprete, id = 1},
+                     new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Interprete, id = 2}
+                 };
                 result.Add(pFValueInterprete);
             }
             //Orquesta
@@ -223,51 +230,55 @@ namespace TangoClubUploader
                 pFValueOrquesta.id_feature = 15;
                 pFValueOrquesta.custom = 1;
                 pFValueOrquesta.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
-                {
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Orquesta, id = 1},
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Orquesta, id = 2}
-                };
+                 {
+                     new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Orquesta, id = 1},
+                     new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Orquesta, id = 2}
+                 };
                 result.Add(pFValueOrquesta);
             }
             //Sello
-            if (cancion.Sello != String.Empty)
+            if (!String.IsNullOrEmpty(cancion.Compositor))
             {
-                product_feature_value pFValueSello = new product_feature_value();
-                pFValueSello.id_feature = 16;
-                pFValueSello.custom = 1;
-                pFValueSello.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
-                {
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Sello, id = 1},
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Sello, id = 2}
-                };
-                result.Add(pFValueSello);
+                product_feature_value pFValueCompositor = new product_feature_value();
+                pFValueCompositor.id_feature = 16;
+                pFValueCompositor.custom = 1;
+                pFValueCompositor.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+                 {
+                     new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Compositor, id = 1},
+                     new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Compositor, id = 2}
+                 };
+                result.Add(pFValueCompositor);
             }
+
             //Track
-            product_feature_value pFValueTrack = new product_feature_value();
-            pFValueTrack.id_feature = 17;
-            pFValueTrack.custom = 1;
-            pFValueTrack.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+            if (!String.IsNullOrEmpty(cancion.Autor))
             {
-                new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Track.ToString(), id = 1},
-                new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Track.ToString(), id = 2}
-            };
-            result.Add(pFValueTrack);
-            //Vocalista
-            if (cancion.Vocalista != String.Empty)
-            {
-                product_feature_value pFValueVocalista = new product_feature_value();
-                pFValueVocalista.id_feature = 18;
-                pFValueVocalista.custom = 1;
-                pFValueVocalista.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+                product_feature_value pFValueAutor = new product_feature_value();
+                pFValueAutor.id_feature = 17;
+                pFValueAutor.custom = 1;
+                pFValueAutor.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
                 {
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Vocalista, id = 1},
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Vocalista, id = 2}
+                     new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Autor, id = 1},
+                     new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Autor, id = 2}
                 };
-                result.Add(pFValueVocalista);
+                result.Add(pFValueAutor);
+            }
+            //vocalista
+            if (!String.IsNullOrEmpty(cancion.Vocalista))
+            {
+                product_feature_value pfvaluevocalista = new product_feature_value();
+                pfvaluevocalista.id_feature = 18;
+                pfvaluevocalista.custom = 1;
+                pfvaluevocalista.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
+                 {
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Vocalista, id = 1 },
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Vocalista, id = 2 }
+                 };
+                result.Add(pfvaluevocalista);
             }
 
             //return result;
-           return this._pFValueFactory.AddList(result);
+            return this._pFValueFactory.AddList(result);
         }
 
         private product CargarTangoProductFeaturesAProducto(List<product_feature_value> lstFeaturesValues,product producto)
@@ -298,13 +309,14 @@ namespace TangoClubUploader
 
         private string GetDescription(TangoClub cancion)
         {
-            return String.Format("Interprete {0} - Album: {1} - Track: {2} - Tema: {3}", cancion.Interprete, cancion.Album, cancion.Track, cancion.Tema);
+            //Recordar respetar el espacio en blanco, para que en la descripcion aparesca separado
+            return String.Format("<p>Interprete {0} </p><p>Album: {1} </p><p>Track: {2} </p><p>Tema: {3} </p>", cancion.Interprete, cancion.Album, cancion.Track, cancion.Tema);
         }
 
         private List<TangoClub> getCancionesAAgregar()
         {
             List<TangoClub> lstCanciones = this._context.TangoClub.ToList();
-            List<product> lstProductos = this._productFactory.GetAll();
+            List<product> lstProductos = this.getProductosVirtuales();
 
             String shortDesc = String.Empty;
             List<TangoClub> lstProductosAAgregar = new List<TangoClub>();
@@ -312,13 +324,18 @@ namespace TangoClubUploader
             {
                 shortDesc = this.GetDescription(c);
 
-                if (lstProductos.Where(z => z.name[0].Value == c.Tema &&
+                if (lstProductos.Where(z => z.name[0].Value == c.Tema + " - " + c.Interprete &&
                     z.description_short[0].Value == shortDesc).Count() == 0)
                 {
                     lstProductosAAgregar.Add(c);
                 }
             }
             return lstProductosAAgregar;
+        }
+
+        private List<Bukimedia.PrestaSharp.Entities.product> getProductosVirtuales()
+        {
+            return this._productFactory.GetAll().Where(z => z.is_virtual == 1 && z.active == 1).ToList();
         }
 
         private bool CargarArchivoAFtp(string newName, string path)
