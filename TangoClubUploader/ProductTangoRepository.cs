@@ -68,8 +68,8 @@ namespace TangoClubUploader
                         new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id=1, Value = cancion.Tema.ToUpper().Replace(' ', '_')},
                         new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { id=1, Value = cancion.Tema.ToUpper().Replace(' ', '_')}
                     };
-                        
-                        
+
+
                     //productBase.id_default_image = 1;
                     productBase.associations.images = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.image>() { new Bukimedia.PrestaSharp.Entities.AuxEntities.image() { id = 1 } };
                     productBase.name = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
@@ -114,7 +114,9 @@ namespace TangoClubUploader
                     result = (Int32)productBase.id;
                 }
                 else
-                    result = 0;
+                {
+                    throw new Exception("No existe el archivo en la ruta indicada.");
+                }
             }
             catch (Exception ex)
             {
