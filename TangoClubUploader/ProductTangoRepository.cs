@@ -342,7 +342,7 @@ namespace TangoClubUploader
 
         private bool CargarArchivoAFtp(string newName, string path)
         {
-            ftp ftpRepo = new ftp("ftp://fs000512.ferozo.com/", "uploadmp3@prestashoptesting.com", "Batc2016");
+            ftp ftpRepo = new ftp(Properties.Settings.Default.ApiUrl, Properties.Settings.Default.ApiAccount, Properties.Settings.Default.ApiPass);
             ftpRepo.upload(newName, path);
 
             return false;

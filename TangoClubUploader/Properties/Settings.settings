@@ -12,7 +12,7 @@
       <Value Profile="(Default)">mi77SIgago</Value>
     </Setting>
     <Setting Name="ApiUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://xw000221.ferozo.com/api</Value>
+      <Value Profile="(Default)">http://xw000221.ferozo.com/api/</Value>
     </Setting>
     <Setting Name="ApiAccount" Type="System.String" Scope="User">
       <Value Profile="(Default)">Q46L3LAFZZGKPBH6DAEMHWVR2BVV1U47</Value>

@@ -57,10 +57,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MetroFramework">
-      <HintPath>..\..\TangoClubUploader\TangoClubUploader\TangoClubUploader\MetroFramework.dll</HintPath>
+      <HintPath>..\MetroFramework.dll</HintPath>
     </Reference>
     <Reference Include="MetroFramework.Fonts">
-      <HintPath>..\..\TangoClubUploader\TangoClubUploader\TangoClubUploader\MetroFramework.Fonts.dll</HintPath>
+      <HintPath>..\MetroFramework.Fonts.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
