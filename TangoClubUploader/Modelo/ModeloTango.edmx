@@ -4,9 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TangoClubCatalogoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'TangoClubCatalogo.dbo.TangoClub' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+    <Schema Namespace="TangoClubCatalogoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="TangoClub">
           <Key>
             <PropertyRef Name="CodigTrack" />
@@ -24,40 +22,24 @@ warning 6002: The table/view 'TangoClubCatalogo.dbo.TangoClub' does not have a p
           <Property Name="Compositor" Type="varchar" MaxLength="100" />
           <Property Name="Vocalista" Type="varchar" MaxLength="100" />
           <Property Name="Autor" Type="varchar" MaxLength="100" />
-          <Property Name="Track" Type="smallint" />
-          <Property Name="Path" Type="varchar" MaxLength="100" />
+          <Property Name="track" Type="int" />
+          <Property Name="path" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityContainer Name="TangoClubCatalogoModelStoreContainer">
-          <EntitySet Name="TangoClub" EntityType="Self.TangoClub" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TangoClub].[CodigTrack] AS [CodigTrack], 
-    [TangoClub].[Tema] AS [Tema], 
-    [TangoClub].[Fecha] AS [Fecha], 
-    [TangoClub].[Album] AS [Album], 
-    [TangoClub].[CodigoAlbum] AS [CodigoAlbum], 
-    [TangoClub].[Sello] AS [Sello], 
-    [TangoClub].[Estilo] AS [Estilo], 
-    [TangoClub].[Genero] AS [Genero], 
-    [TangoClub].[Interprete] AS [Interprete], 
-    [TangoClub].[Orquesta] AS [Orquesta], 
-    [TangoClub].[Compositor] AS [Compositor], 
-    [TangoClub].[Vocalista] AS [Vocalista], 
-    [TangoClub].[Autor] AS [Autor], 
-    [TangoClub].[Track] AS [Track], 
-    [TangoClub].[Path] AS [Path]
-    FROM [dbo].[TangoClub] AS [TangoClub]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="TangoClub" EntityType="Self.TangoClub" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TangoClubCatalogoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TangoClubCatalogoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TangoClub" EntityType="TangoClubCatalogoModel.TangoClub" />
+        </EntityContainer>
         <EntityType Name="TangoClub">
           <Key>
             <PropertyRef Name="CodigTrack" />
           </Key>
-          <Property Name="CodigTrack" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodigTrack" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Tema" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Fecha" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Album" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -70,12 +52,9 @@ warning 6002: The table/view 'TangoClubCatalogo.dbo.TangoClub' does not have a p
           <Property Name="Compositor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Vocalista" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Autor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Track" Type="Int16" />
-          <Property Name="Path" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="track" Type="Int32" />
+          <Property Name="path" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="TangoClubCatalogoEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="TangoClub" EntityType="Self.TangoClub" />
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -85,21 +64,21 @@ warning 6002: The table/view 'TangoClubCatalogo.dbo.TangoClub' does not have a p
           <EntitySetMapping Name="TangoClub">
             <EntityTypeMapping TypeName="TangoClubCatalogoModel.TangoClub">
               <MappingFragment StoreEntitySet="TangoClub">
-                <ScalarProperty Name="CodigTrack" ColumnName="CodigTrack" />
-                <ScalarProperty Name="Tema" ColumnName="Tema" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Album" ColumnName="Album" />
-                <ScalarProperty Name="CodigoAlbum" ColumnName="CodigoAlbum" />
-                <ScalarProperty Name="Sello" ColumnName="Sello" />
-                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
-                <ScalarProperty Name="Genero" ColumnName="Genero" />
-                <ScalarProperty Name="Interprete" ColumnName="Interprete" />
-                <ScalarProperty Name="Orquesta" ColumnName="Orquesta" />
-                <ScalarProperty Name="Compositor" ColumnName="Compositor" />
-                <ScalarProperty Name="Vocalista" ColumnName="Vocalista" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="track" ColumnName="track" />
                 <ScalarProperty Name="Autor" ColumnName="Autor" />
-                <ScalarProperty Name="Track" ColumnName="Track" />
-                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="Vocalista" ColumnName="Vocalista" />
+                <ScalarProperty Name="Compositor" ColumnName="Compositor" />
+                <ScalarProperty Name="Orquesta" ColumnName="Orquesta" />
+                <ScalarProperty Name="Interprete" ColumnName="Interprete" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
+                <ScalarProperty Name="Sello" ColumnName="Sello" />
+                <ScalarProperty Name="CodigoAlbum" ColumnName="CodigoAlbum" />
+                <ScalarProperty Name="Album" ColumnName="Album" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Tema" ColumnName="Tema" />
+                <ScalarProperty Name="CodigTrack" ColumnName="CodigTrack" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

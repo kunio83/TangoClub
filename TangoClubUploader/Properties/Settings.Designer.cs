@@ -25,7 +25,7 @@ namespace TangoClubUploader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ftp://ftp.xw000221.ferozo.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ftp://xw000221.ferozo.com/")]
         public string FtpHost {
             get {
                 return ((string)(this["FtpHost"]));
@@ -37,7 +37,7 @@ namespace TangoClubUploader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("xw000221")]
+        [global::System.Configuration.DefaultSettingValueAttribute("upload@xw000221.ferozo.com")]
         public string FtpUser {
             get {
                 return ((string)(this["FtpUser"]));
@@ -49,7 +49,7 @@ namespace TangoClubUploader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("mi77SIgago")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batc2016")]
         public string FtpPass {
             get {
                 return ((string)(this["FtpPass"]));
@@ -61,7 +61,7 @@ namespace TangoClubUploader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://xw000221.ferozo.com/api/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://xw000221.ferozo.com/api")]
         public string ApiUrl {
             get {
                 return ((string)(this["ApiUrl"]));

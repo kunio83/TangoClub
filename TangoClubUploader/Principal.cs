@@ -51,7 +51,7 @@ namespace TangoClubUploader
             {
                 try
                 {
-                    lblEstado.Text = "Procesando: " + Path.GetFileName(cancion.Path) + "(" + cancion.Tema + ")";
+                    lblEstado.Text = "Procesando: " + Path.GetFileName(cancion.path) + "(" + cancion.Tema + ")";
                     newFileName = this._tangoRepo.GetNewFileName();
 
                     //Creamos el Producto y lo traigo por si hay que borrarlo
@@ -63,7 +63,7 @@ namespace TangoClubUploader
                         String ftpUser = Properties.Settings.Default.FtpUser;
                         String ftpPass = Properties.Settings.Default.FtpPass;
 
-                        if (VBRepository.SubirAftp(cancion.Path, newFileName, ftpHost, ftpUser, ftpPass))
+                        if (VBRepository.SubirAftp(cancion.path, newFileName, ftpHost, ftpUser, ftpPass))
                         {
                             Numactual++;
                             lblCantidad.Text = String.Format("{0} / {1}", Numactual, this._tangoRepo.totalASubir);

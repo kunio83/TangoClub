@@ -51,7 +51,7 @@ namespace TangoClubUploader
             int result = 0;
             try
             {
-                if (File.Exists(cancion.Path))
+                if (File.Exists(cancion.path))
                 {
                     //Genero y Cargo y Obtengo el product
                     int idProductoBase = Convert.ToInt32(Properties.Settings.Default.IdProductoBase);
@@ -99,7 +99,7 @@ namespace TangoClubUploader
                         active = 1,
                         date_add = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
                         date_expiration = "2999-01-01",
-                        display_filename = Path.GetFileName(cancion.Path),
+                        display_filename = Path.GetFileName(cancion.path),
                         filename = newFileName,
                         id_product = productBase.id,
                         id = 0,
@@ -174,15 +174,15 @@ namespace TangoClubUploader
                 result.Add(pFValueGenero);
             }
             //Compositor
-            if (cancion.Track != 0)
+            if (cancion.track != 0)
             {
                 product_feature_value pFValueTrack = new product_feature_value();
                 pFValueTrack.id_feature = 11;
                 pFValueTrack.custom = 1;
                 pFValueTrack.value = new List<Bukimedia.PrestaSharp.Entities.AuxEntities.language>()
                 {
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Track.ToString(), id = 1},
-                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.Track.ToString(), id = 2}
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.track.ToString(), id = 1},
+                    new Bukimedia.PrestaSharp.Entities.AuxEntities.language() { Value = cancion.track.ToString(), id = 2}
                 };
                 result.Add(pFValueTrack);
             }
@@ -312,7 +312,7 @@ namespace TangoClubUploader
         private string GetDescription(TangoClub cancion)
         {
             //Recordar respetar el espacio en blanco, para que en la descripcion aparesca separado
-            return String.Format("<p>Interprete {0} </p><p>Album: {1} </p><p>Track: {2} </p><p>Tema: {3} </p>", cancion.Interprete, cancion.Album, cancion.Track, cancion.Tema);
+            return String.Format("<p>Interprete {0} </p><p>Album: {1} </p><p>Track: {2} </p><p>Tema: {3} </p>", cancion.Interprete, cancion.Album, cancion.track, cancion.Tema);
         }
 
         private List<TangoClub> getCancionesAAgregar()
