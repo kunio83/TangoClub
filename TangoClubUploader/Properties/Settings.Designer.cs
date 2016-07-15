@@ -142,5 +142,17 @@ namespace TangoClubUploader.Properties {
                 this["IdProductoBase"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("CancionesInexistentes.txt")]
+        public string FileName {
+            get {
+                return ((string)(this["FileName"]));
+            }
+            set {
+                this["FileName"] = value;
+            }
+        }
     }
 }

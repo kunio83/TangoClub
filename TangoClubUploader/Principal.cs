@@ -1,5 +1,4 @@
-﻿using MetroFramework.Forms;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,13 +13,15 @@ using TangoCommon;
 
 namespace TangoClubUploader
 {
-    public partial class Principal : MetroForm
+    public partial class Principal : Form
     {
         ProductTangoRepository _tangoRepo;
+        //FileManager _fileManager;
 
         public Principal()
         {
             InitializeComponent();
+            //this._fileManager = new FileManager();
         }
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -43,6 +44,8 @@ namespace TangoClubUploader
         {
             int Numactual = 0;
             string newFileName;
+            string nl = "\r\n";
+            //string cancionesNoExisten = String.Empty;
             progressBar1.Maximum = this._tangoRepo.totalASubir;
             lblTips.Text = "Publicando Articulos...";
             lblEstado.Visible = true;
@@ -51,31 +54,44 @@ namespace TangoClubUploader
             {
                 try
                 {
-                    lblEstado.Text = "Procesando: " + Path.GetFileName(cancion.path) + "(" + cancion.Tema + ")";
-                    newFileName = this._tangoRepo.GetNewFileName();
-
-                    //Creamos el Producto y lo traigo por si hay que borrarlo
-                    int idNuevoProducto = this._tangoRepo.CargarCancionProducto(cancion, newFileName);
-                    if (idNuevoProducto != 0)
+                    if (File.Exists(cancion.path))
                     {
-                        //Subimos a FTP
-                        String ftpHost = Properties.Settings.Default.FtpHost;
-                        String ftpUser = Properties.Settings.Default.FtpUser;
-                        String ftpPass = Properties.Settings.Default.FtpPass;
+                        //Si la cancion existe pero esta en los inexistentes, lo borro del txt
+                        //if (this._fileManager.ExisteCancion(cancion.path))
+                        //    this._fileManager.BorrarCancion(cancion.path);
 
-                        if (VBRepository.SubirAftp(cancion.path, newFileName, ftpHost, ftpUser, ftpPass))
+                        lblEstado.Text = "Procesando: " + Path.GetFileName(cancion.path) + "(" + cancion.Tema + ")";
+                        newFileName = this._tangoRepo.GetNewFileName();
+
+                        //Creamos el Producto y lo traigo por si hay que borrarlo
+                        int idNuevoProducto = this._tangoRepo.CargarCancionProducto(cancion, newFileName);
+                        if (idNuevoProducto != 0)
                         {
-                            Numactual++;
-                            lblCantidad.Text = String.Format("{0} / {1}", Numactual, this._tangoRepo.totalASubir);
-                            progressBar1.Value = Numactual;
+                            //Subimos a FTP
+                            String ftpHost = Properties.Settings.Default.FtpHost;
+                            String ftpUser = Properties.Settings.Default.FtpUser;
+                            String ftpPass = Properties.Settings.Default.FtpPass;
+
+                            if (VBRepository.SubirAftp(cancion.path, newFileName, ftpHost, ftpUser, ftpPass))
+                            {
+                                Numactual++;
+                                lblCantidad.Text = String.Format("{0} / {1}", Numactual, this._tangoRepo.totalASubir);
+                                progressBar1.Value = Numactual;
+                            }
+                            else
+                            {
+                                this._tangoRepo._productFactory.Delete(idNuevoProducto);
+                                lblEstado.Visible = false;
+                                progressBar1.Value = 0;
+                                break;
+                            }
                         }
-                        else
-                        {
-                            this._tangoRepo._productFactory.Delete(idNuevoProducto);
-                            lblEstado.Visible = false;
-                            progressBar1.Value = 0;
-                            break;
-                        }
+                    }
+                    else
+                    {
+                        //cancionesNoExisten += cancion.path + nl;
+                        //if (!this._fileManager.ExisteCancion(cancion.path))
+                        //    this._fileManager.EscribirCancion(cancion.path);
                     }
 
                 }
@@ -86,9 +102,15 @@ namespace TangoClubUploader
                     progressBar1.Maximum = this._tangoRepo.totalASubir;
                     break;
                 }
-            
+                
             }
+            System.Windows.Forms.MessageBox.Show("Fin de Publicación");
+            //System.Windows.Forms.MessageBox.Show(this, "no existen:" + cancionesNoExisten, "Fin de Publicación");
+            //mbox.Text = "Fin de Publicación" + nl + "no existen:" + cancionesNoExisten;
+            //mbox.Show(this, "no existen:" + cancionesNoExisten, "Fin de Publicación");
             lblEstado.Visible = false;
+            
+    
         }
 
         private void Principal_Load(object sender, EventArgs e)
