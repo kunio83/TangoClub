@@ -145,7 +145,7 @@ namespace TangoClubUploader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("CancionesInexistentes.txt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("CancionesInexistentes.csv")]
         public string FileName {
             get {
                 return ((string)(this["FileName"]));

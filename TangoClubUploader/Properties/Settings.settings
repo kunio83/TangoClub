@@ -33,7 +33,7 @@
       <Value Profile="(Default)">25</Value>
     </Setting>
     <Setting Name="FileName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">CancionesInexistentes.txt</Value>
+      <Value Profile="(Default)">CancionesInexistentes.csv</Value>
     </Setting>
   </Settings>
 </SettingsFile>

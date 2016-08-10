@@ -15,6 +15,7 @@ namespace TangoClubUploader
 {
     public partial class Principal : Form
     {
+        Verificador _frmVerificador;
         ProductTangoRepository _tangoRepo;
         //FileManager _fileManager;
 
@@ -45,7 +46,7 @@ namespace TangoClubUploader
             int Numactual = 0;
             string newFileName;
             string nl = "\r\n";
-            //string cancionesNoExisten = String.Empty;
+            string cancionesNoExisten = String.Empty;
             progressBar1.Maximum = this._tangoRepo.totalASubir;
             lblTips.Text = "Publicando Articulos...";
             lblEstado.Visible = true;
@@ -56,10 +57,6 @@ namespace TangoClubUploader
                 {
                     if (File.Exists(cancion.path))
                     {
-                        //Si la cancion existe pero esta en los inexistentes, lo borro del txt
-                        //if (this._fileManager.ExisteCancion(cancion.path))
-                        //    this._fileManager.BorrarCancion(cancion.path);
-
                         lblEstado.Text = "Procesando: " + Path.GetFileName(cancion.path) + "(" + cancion.Tema + ")";
                         newFileName = this._tangoRepo.GetNewFileName();
 
@@ -89,9 +86,7 @@ namespace TangoClubUploader
                     }
                     else
                     {
-                        //cancionesNoExisten += cancion.path + nl;
-                        //if (!this._fileManager.ExisteCancion(cancion.path))
-                        //    this._fileManager.EscribirCancion(cancion.path);
+
                     }
 
                 }
@@ -142,6 +137,14 @@ namespace TangoClubUploader
             {
 
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (this._frmVerificador == null)
+                this._frmVerificador = new Verificador();
+
+            this._frmVerificador.ShowDialog();
         }
     }
 }
