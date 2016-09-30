@@ -112,7 +112,7 @@ namespace TangoClubUploader
             String ftpUser = Properties.Settings.Default.FtpUser;
             String ftpPass = Properties.Settings.Default.FtpPass;
             int ftpRetries = int.Parse(Properties.Settings.Default.FtpCantidadReintentos);
-            int ftpTimeout = int.Parse(Properties.Settings.Default.FtpCantidadReintentos);
+            int ftpTimeout = int.Parse(Properties.Settings.Default.FtpTimeOut);
             int ftpIntento = 0;
             bool result = false;
 
