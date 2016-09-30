@@ -34,10 +34,10 @@ namespace TangoClubUploader
             {
                 if (((DialogResult)MessageBox.Show(msj, "Confirmar", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2)) == DialogResult.OK)
                 {
-                    
                     this.Sincronizar();
+                    this._tangoRepo.isUpdated = false;
+                    this.RefrescarInfoLabel();
                 }
-                this.RefrescarInfoLabel();
             }
         }
 
@@ -45,7 +45,6 @@ namespace TangoClubUploader
         {
             int Numactual = 0;
             string newFileName;
-            string nl = "\r\n";
             string cancionesNoExisten = String.Empty;
             progressBar1.Maximum = this._tangoRepo.totalASubir;
             lblTips.Text = "Publicando Articulos...";
@@ -64,12 +63,11 @@ namespace TangoClubUploader
                         int idNuevoProducto = this._tangoRepo.CargarCancionProducto(cancion, newFileName);
                         if (idNuevoProducto != 0)
                         {
-                            //Subimos a FTP
-                            String ftpHost = Properties.Settings.Default.FtpHost;
-                            String ftpUser = Properties.Settings.Default.FtpUser;
-                            String ftpPass = Properties.Settings.Default.FtpPass;
+                            
 
-                            if (VBRepository.SubirAftp(cancion.path, newFileName, ftpHost, ftpUser, ftpPass))
+                            //VBRepository.SubirAftp(cancion.path, newFileName, ftpHost, ftpUser, ftpPass, int.Parse(Properties.Settings.Default.FtpTimeOut)))
+
+                            if (SubirAFtp(cancion.path, newFileName))
                             {
                                 Numactual++;
                                 lblCantidad.Text = String.Format("{0} / {1}", Numactual, this._tangoRepo.totalASubir);
@@ -93,6 +91,7 @@ namespace TangoClubUploader
                 catch (Exception ex)
                 {
                     lblEstado.Visible = false;
+                    Clipboard.SetText(ex.Message);
                     MessageBox.Show("Error: " + ex.Message);
                     progressBar1.Maximum = this._tangoRepo.totalASubir;
                     break;
@@ -104,8 +103,35 @@ namespace TangoClubUploader
             //mbox.Text = "Fin de Publicación" + nl + "no existen:" + cancionesNoExisten;
             //mbox.Show(this, "no existen:" + cancionesNoExisten, "Fin de Publicación");
             lblEstado.Visible = false;
-            
-    
+        }
+
+        private Boolean SubirAFtp(string path, string fileName)
+        {
+            //Subimos a FTP
+            String ftpHost = Properties.Settings.Default.FtpHost;
+            String ftpUser = Properties.Settings.Default.FtpUser;
+            String ftpPass = Properties.Settings.Default.FtpPass;
+            int ftpRetries = int.Parse(Properties.Settings.Default.FtpCantidadReintentos);
+            int ftpTimeout = int.Parse(Properties.Settings.Default.FtpCantidadReintentos);
+            int ftpIntento = 0;
+            bool result = false;
+
+            try
+            {
+                while (!result && ftpIntento < ftpRetries)
+                {
+                    ftpIntento++;
+                    result = VBRepository.SubirAftp(path, fileName, ftpHost, ftpUser, ftpPass, ftpTimeout);
+                }
+
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return result;
         }
 
         private void Principal_Load(object sender, EventArgs e)
@@ -116,9 +142,7 @@ namespace TangoClubUploader
             String Password = Properties.Settings.Default.ApiPass;
             this._tangoRepo = new ProductTangoRepository(BaseUrl, Account, Password);
 
-            this.RefrescarInfoLabel();
-
-
+            //this.RefrescarInfoLabel();
         }
 
         private void RefrescarInfoLabel()
@@ -141,8 +165,10 @@ namespace TangoClubUploader
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this.RefrescarInfoLabel();
+
             if (this._frmVerificador == null)
-                this._frmVerificador = new Verificador();
+                this._frmVerificador = new Verificador(this._tangoRepo);
 
             this._frmVerificador.ShowDialog();
         }

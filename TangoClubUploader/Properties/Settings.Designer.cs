@@ -25,7 +25,7 @@ namespace TangoClubUploader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ftp://xw000221.ferozo.com/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ftp://buenosairestangoclub.com/")]
         public string FtpHost {
             get {
                 return ((string)(this["FtpHost"]));
@@ -37,7 +37,7 @@ namespace TangoClubUploader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("upload@xw000221.ferozo.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("mp3@buenosairestangoclub.com")]
         public string FtpUser {
             get {
                 return ((string)(this["FtpUser"]));
@@ -49,7 +49,7 @@ namespace TangoClubUploader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Batc2016")]
+        [global::System.Configuration.DefaultSettingValueAttribute("batc2016")]
         public string FtpPass {
             get {
                 return ((string)(this["FtpPass"]));
@@ -61,7 +61,7 @@ namespace TangoClubUploader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://xw000221.ferozo.com/api")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://buenosairestangoclub.com/api")]
         public string ApiUrl {
             get {
                 return ((string)(this["ApiUrl"]));
@@ -121,7 +121,7 @@ namespace TangoClubUploader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public string Precio {
             get {
                 return ((string)(this["Precio"]));
@@ -152,6 +152,30 @@ namespace TangoClubUploader.Properties {
             }
             set {
                 this["FileName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5000")]
+        public string FtpTimeOut {
+            get {
+                return ((string)(this["FtpTimeOut"]));
+            }
+            set {
+                this["FtpTimeOut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public string FtpCantidadReintentos {
+            get {
+                return ((string)(this["FtpCantidadReintentos"]));
+            }
+            set {
+                this["FtpCantidadReintentos"] = value;
             }
         }
     }

@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="FtpHost" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ftp://xw000221.ferozo.com/</Value>
+      <Value Profile="(Default)">ftp://buenosairestangoclub.com/</Value>
     </Setting>
     <Setting Name="FtpUser" Type="System.String" Scope="User">
-      <Value Profile="(Default)">upload@xw000221.ferozo.com</Value>
+      <Value Profile="(Default)">mp3@buenosairestangoclub.com</Value>
     </Setting>
     <Setting Name="FtpPass" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Batc2016</Value>
+      <Value Profile="(Default)">batc2016</Value>
     </Setting>
     <Setting Name="ApiUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://xw000221.ferozo.com/api</Value>
+      <Value Profile="(Default)">http://buenosairestangoclub.com/api</Value>
     </Setting>
     <Setting Name="ApiAccount" Type="System.String" Scope="User">
       <Value Profile="(Default)">Q46L3LAFZZGKPBH6DAEMHWVR2BVV1U47</Value>
@@ -27,13 +27,19 @@
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="Precio" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="IdProductoBase" Type="System.String" Scope="User">
       <Value Profile="(Default)">25</Value>
     </Setting>
     <Setting Name="FileName" Type="System.String" Scope="User">
       <Value Profile="(Default)">CancionesInexistentes.csv</Value>
+    </Setting>
+    <Setting Name="FtpTimeOut" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5000</Value>
+    </Setting>
+    <Setting Name="FtpCantidadReintentos" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5</Value>
     </Setting>
   </Settings>
 </SettingsFile>

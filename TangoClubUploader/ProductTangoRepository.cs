@@ -22,7 +22,9 @@ namespace TangoClubUploader
         public ProductFeatureValueFactory _pFValueFactory;
         public ProductDownloadFactory _productDownloadFactory;
         public List<TangoClub> _cancionesAAgregar;
+        private List<Bukimedia.PrestaSharp.Entities.product> productosVirtuales;
 
+        public Boolean isUpdated { get; set; }
         public int totalEnTienda { get; set; }
         public int totalLocal { get; set; }
         public int totalASubir { get; set; }
@@ -34,16 +36,20 @@ namespace TangoClubUploader
             _pFeatureFactory = new ProductFeatureFactory(BaseUrl, Account, Password);
             _pFValueFactory = new ProductFeatureValueFactory(BaseUrl, Account, Password);
             _productDownloadFactory = new ProductDownloadFactory(BaseUrl, Account, Password);
+            isUpdated = false;
 
         }
 
         public void RefreshInfoCarga()
         {
             //Cargar datos de subida
-            _cancionesAAgregar = getCancionesAAgregar();
-            totalEnTienda = this.getProductosVirtuales().Count; //resto el Producto Base
-            totalLocal = this._context.TangoClub.Count();
-            totalASubir = this._cancionesAAgregar.Count;
+            if (!isUpdated)
+            {
+                _cancionesAAgregar = getCancionesAAgregar();
+                totalEnTienda = this.getProductosVirtuales().Count; //resto el Producto Base
+                totalLocal = this._context.TangoClub.Count();
+                totalASubir = this._cancionesAAgregar.Count;
+            }
         }
 
         public int CargarCancionProducto(TangoClub cancion,String newFileName)
@@ -337,7 +343,15 @@ namespace TangoClubUploader
 
         private List<Bukimedia.PrestaSharp.Entities.product> getProductosVirtuales()
         {
-            return this._productFactory.GetAll().Where(z => z.is_virtual == 1 && z.active == 1).ToList();
+            if (productosVirtuales == null || !isUpdated)
+            {
+                productosVirtuales = this._productFactory.GetAll();
+                if(productosVirtuales == null)
+                    productosVirtuales = new List<product>();
+                productosVirtuales = productosVirtuales.Where(z => z.is_virtual == 1 && z.active == 1).ToList();
+                isUpdated = true;
+            }
+            return productosVirtuales;
         }
 
         private bool CargarArchivoAFtp(string newName, string path)

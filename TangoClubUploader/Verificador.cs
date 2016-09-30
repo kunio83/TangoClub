@@ -24,6 +24,11 @@ namespace TangoClubUploader
             InitializeComponent();
         }
 
+        public Verificador(ProductTangoRepository tangoRepo)
+        {
+            this._tangoRepo = tangoRepo;
+            InitializeComponent();
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             label1.Visible = true;
@@ -87,11 +92,11 @@ namespace TangoClubUploader
         private void Verificador_Load(object sender, EventArgs e)
         {
             //Instancio repo tango con datos del properties
-            String BaseUrl = Properties.Settings.Default.ApiUrl;
-            String Account = Properties.Settings.Default.ApiAccount;
-            String Password = Properties.Settings.Default.ApiPass;
-            this._tangoRepo = new ProductTangoRepository(BaseUrl, Account, Password);
-            this._tangoRepo.RefreshInfoCarga();
+            //String BaseUrl = Properties.Settings.Default.ApiUrl;
+            //String Account = Properties.Settings.Default.ApiAccount;
+            //String Password = Properties.Settings.Default.ApiPass;
+            //this._tangoRepo = new ProductTangoRepository(BaseUrl, Account, Password);
+            //this._tangoRepo.RefreshInfoCarga();
 
         }
     }
